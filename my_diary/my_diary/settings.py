@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8uy=m7h^76q#tpu=jk%&$xh6s!jvsff43l5-29cco*&uof29n@'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -42,7 +43,11 @@ INSTALLED_APPS = [
 
     # 3rd party
     'rest_framework',
-    'ckeditor'
+    'crispy_forms',
+    'ckeditor',
+    'tailwind',
+    'theme'
+
 ]
 
 MIDDLEWARE = [
@@ -83,6 +88,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -129,7 +137,15 @@ STATIC_DIRS = [
     os.path.join(BASE_DIR, "static/")
 ]
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "home"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

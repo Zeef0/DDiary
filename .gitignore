@@ -1,6 +1,7 @@
 myvenv
 .idea
 .env
+theme
 
 *.log
 *.pot

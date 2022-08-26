@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'entries/base.html '%}
+
+{% block content %}
+
+
+{{ context.profile }}
 {% for i in context%}
-    <li>{{ i }}</li>
-    {{ i.content }}
+    <li class="bg-blue-300">{{ i }}</li>
+    {{ i.content|safe }}
+    {{ i.profile }}
+
 {% endfor %}
-</body>
-</html>
+{% endblock %}

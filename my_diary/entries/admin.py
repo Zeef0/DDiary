@@ -4,4 +4,8 @@ from users.models import Profile
 # Register your models here.
 admin.site.register(Entry)
 admin.site.register(Comment)
-admin.site.register(Profile)
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ["user", "profile_pic", "gender"]
