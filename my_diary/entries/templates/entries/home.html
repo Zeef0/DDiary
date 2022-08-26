@@ -6,8 +6,21 @@
 {{ context.profile }}
 {% for i in context%}
     <li class="bg-blue-300">{{ i }}</li>
-    {{ i.content|safe }}
-    {{ i.profile }}
+    <div class="content flex flex-column-reverse">
+        {{ i.content|safe  }}
+
+
+    </div>
+
+    {% if i.date_created < i.date_modified%}
+    <p>Date Created: <sub>{{ i.date_created }}</sub>
+        <sub>Date Modified:</sub>{{ i.date_modified }}</p>
+    {% else %}
+    <small>crea{{ i.date_created }}</small>
+    {% endif %}
+
+
+<img src="{{ context.owner.profile_pic.url  }}" alt="{{i.owner}}'s profile pic" srcset="">
 
 {% endfor %}
 {% endblock %}
