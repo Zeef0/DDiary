@@ -3,7 +3,6 @@ from .models import  Entry, Comment
 from users.models import Profile
 # Register your models here.
 
-admin.site.register(Comment)
 
 @admin.register(Entry)
 class EntryAdminModel(admin.ModelAdmin):
