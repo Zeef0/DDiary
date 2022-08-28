@@ -26,12 +26,16 @@ class Entry(models.Model):
         return self.title
 
 class Comment(models.Model):
-    entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, related_name="entries")
     text = models.CharField(max_length=120)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ["-date_modified"]
 
+    def __str__(self):
+        return self.title[0] + self.title[1:10]
 # @receiver(post_delete, sender=Entry)
 # def diary_pictures_delete(sender, instance, **kwargs):
 #     instance.image.delete(False)

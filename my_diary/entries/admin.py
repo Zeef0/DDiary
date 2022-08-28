@@ -9,6 +9,12 @@ admin.site.register(Comment)
 class EntryAdminModel(admin.ModelAdmin):
     list_display = ["owner", "title", "date_created", "date_modified", "content"]
 
+
+@admin.register(Comment)
+class CommentAdminModel(admin.ModelAdmin):
+    list_display = ["entry", "text", "date_modified", "date_created"]
+
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ["user", "profile_pic", "gender"]
