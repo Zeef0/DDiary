@@ -3,7 +3,9 @@
 {% block content %}
 
 
-{{ context.profile }}
+
+
+
 {% for i in context%}
     <li class="bg-blue-300">{{ i }}</li>
     <div class="content flex flex-column-reverse">
@@ -18,7 +20,7 @@
     {% else %}
     <small>crea{{ i.date_created }}</small>
 
-    <h4 style="color: #da52f6">XOXOXO<small>{{ i.entry_comments }}</small></h4>
+    <h4 style="color: #da52f6">XOXOXO<small>{{ i.comment.entry_comments }}</small></h4>
     {% endif %}
 
 

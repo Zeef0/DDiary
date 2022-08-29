@@ -1,0 +1,27 @@
+.navbar {
+    display: flex;
+    background-color: #d2124d;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 20vh;
+    margin-bottom: 2rem;
+}
+
+.navbar .nav-brand {
+    padding-left: 1.5em;
+}
+.navbar .nav-brand .brand-logo {
+    height: 55px;
+}
+
+.navbar ul.nav-list {
+    display: flex;
+    align-items: baseline;
+    padding-right: 2rem;
+
+}
+
+.navbar ul li {
+    padding-left: 5px;
+
+}

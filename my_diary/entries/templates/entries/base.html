@@ -1,16 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="{% static 'entries/base.css'%}">
 
     {% block css %}
     {%endblock%}
 
 </head>
 <body>
+    <nav class="navbar">
+        <a href="#" class="nav-brand"><img src="{% static 'entries/Media/D-Diary.svg'%}" class="brand-logo" alt="Error" srcset=""></a>
+        <ul class="nav-list">
+            <li>Home</li>
+            {% if request.user.is_authenticated %}
+            <li><a href="">New Entry</a></li>
+            <li><a href="">Logout</a></li>
+            {% else %}
+            <li><a href="">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
     {% block content %}
     {% endblock %}
 
