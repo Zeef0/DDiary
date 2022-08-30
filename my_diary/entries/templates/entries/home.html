@@ -9,7 +9,7 @@
 {% for i in context%}
     <li class="bg-blue-300">{{ i }} {{ i.owner }}</li>
     <div class="content flex flex-column-reverse">
-        {{ i.content }}
+        {{ i.content|safe }}
 
 
     </div>
@@ -22,7 +22,7 @@
 
     {% endif %}
     
-    <h4 style="color: #da52f6">XOXOXO<small>{{ i.comment.entry_comments }}</small></h4>
+    <h4 style="color: #da52f6">XOXOXO<small>{{ i.comment }}</small></h4>
 
 <img src="{{ context.owner.profile_pic.url  }}" alt="{{i.owner}}'s profile pic" srcset="">
 
