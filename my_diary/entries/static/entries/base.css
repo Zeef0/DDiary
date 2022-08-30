@@ -1,10 +1,11 @@
 .navbar {
     display: flex;
-    background-color: #d2124d;
+    background-color: rgba(59, 57, 57, 0.178);
     justify-content: space-between;
     align-items: center;
-    min-height: 20vh;
+    min-height: 10vh;
     margin-bottom: 2rem;
+    border-bottom: 1px solid black;
 }
 
 .navbar .nav-brand {
@@ -17,11 +18,18 @@
 .navbar ul.nav-list {
     display: flex;
     align-items: baseline;
-    padding-right: 2rem;
+    padding-right: 3em;
+    
 
 }
 
 .navbar ul li {
     padding-left: 5px;
 
+
+}
+
+.navbar ul li a {
+    color: #da52f6;
+    font-weight: 600;
 }

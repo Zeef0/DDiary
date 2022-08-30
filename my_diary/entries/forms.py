@@ -5,4 +5,6 @@ from django import forms
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        exclude = ["date_created", "date_modified"]
+        exclude = ["owner","date_created", "date_modified"]
+
+
