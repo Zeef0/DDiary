@@ -30,8 +30,5 @@ class CreateEntryView(LoginRequiredMixin, CreateView):
         form.instance.owner = Profile.objects.get(user=self.request.user)
         return super().form_valid(form)
 
-def update_entry_view(request, pk):
-    data = get_object_or_404(pk=pk)
-    if data.pk == request.user.pk:
-        form = "form"
+
 
