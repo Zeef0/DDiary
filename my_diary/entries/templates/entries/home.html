@@ -1,19 +1,10 @@
 {% extends 'entries/base.html '%}
 
 {% block content %}
-
-
-
-
-
 {% for i in context%}
+<div class="container mx-auto">
     <li class="bg-blue-300">{{ i }} {{ i.owner }}</li>
-    <div class="content flex flex-column-reverse">
-        {{ i.content|safe }}
-
-
-    </div>
-
+    <a href="{% url 'entry_detail' i.slug %}">{{ i.content|safe}}</a>
     {% if i.date_created < i.date_modified %}
     <p>Date Created: <sub>{{ i.date_created }}</sub>
         <sub>Date Modified:</sub>{{ i.date_modified }}</p>
@@ -25,6 +16,6 @@
     <h4 style="color: #da52f6">XOXOXO<small>{{ i.comment }}</small></h4>
 
 <img src="{{ context.owner.profile_pic.url  }}" alt="{{i.owner}}'s profile pic" srcset="">
-
+</div>
 {% endfor %}
 {% endblock %}

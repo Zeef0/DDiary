@@ -4,6 +4,8 @@ from users.models import Profile
 from ckeditor.fields import RichTextField
 from django.dispatch import receiver
 
+from django.utils.text import slugify 
+
 class Entry(models.Model):
     VISIBILITY = (
         ("TO Anyone", "Public"),
@@ -16,6 +18,12 @@ class Entry(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     images = models.ImageField(blank=True, upload_to="users/images")
+    slug = models.SlugField(blank=True)
+
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Entry, self).save(*args, **kwargs)
 
 
     class Meta:

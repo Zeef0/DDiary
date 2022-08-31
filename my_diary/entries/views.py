@@ -2,7 +2,10 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 
 from .models import Entry, Comment
 
-from django.views.generic.list import ListView
+from django.views.generic import (
+    ListView,
+    DetailView
+    )
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -19,6 +22,13 @@ class Home(ListView):
     def get_queryset(self):
         qs = Entry.objects.all().filter(privacy="Public")
         return qs
+
+
+class EntryDetailView(DetailView):
+    model = Entry
+    context_object_name = "content"
+    
+
 
 
 class CreateEntryView(LoginRequiredMixin, CreateView):
