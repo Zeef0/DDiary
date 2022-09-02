@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-
+from django.db.models import Q, F
 from .models import Entry, Comment
 
 from django.views.generic import (
@@ -17,10 +17,17 @@ class Home(ListView):
     model = Entry
     template_name = "entries/home.html"
     context_object_name = "context"
+    print("test")
 
 
+    
     def get_queryset(self):
-        qs = Entry.objects.all().filter(privacy="Public")
+
+        """
+        Show all items where entries are set to public 
+        """
+        qs = Entry.objects.filter(Q(privacy="Public")| Q(owner__pk= self.request.user.pk))
+        
         return qs
 
 
@@ -42,3 +49,17 @@ class CreateEntryView(LoginRequiredMixin, CreateView):
 
 
 
+class UpdateEntryView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+    model = Entry
+    fields = ["title", "privacy", "content"]
+
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.owner
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user.id == post.owner.id:
+            return True
+        return False

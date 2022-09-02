@@ -1,8 +1,13 @@
 {% extends 'entries/base.html' %}
 
 {% block content %}
-        <h3>{{ content.title }}</h3>
-        <h4>{{ content.owner }}</h4>
-        <small>{{ content.date_created }}</small>
-        <p class="lead">{{ content.content }}</p>
+        <div class="container">
+                <a href="{% url 'update_entry' content.slug %}">
+                <h3>{{ content.title }}</h3>
+                <h4>{{ content.owner }}</h4>
+                <small>{{ content.date_created }}</small>
+                <p class="lead">{{ content.content }}</p>
+        </a>
+        </div>
+
 {% endblock %}
