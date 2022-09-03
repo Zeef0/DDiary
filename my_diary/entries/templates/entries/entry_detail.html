@@ -2,12 +2,14 @@
 
 {% block content %}
         <div class="container">
-                <a href="{% url 'update_entry' content.slug %}">
+                <a href="{% url 'entries:update_entry' content.slug %}">
                 <h3>{{ content.title }}</h3>
                 <h4>{{ content.owner }}</h4>
                 <small>{{ content.date_created }}</small>
                 <p class="lead">{{ content.content }}</p>
         </a>
         </div>
+
+        <a href="{% url 'entries:delete_entry' content.id %}" class="btn btn-danher">Delete</a>
 
 {% endblock %}

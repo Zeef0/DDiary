@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404, reverse
 from django.db.models import Q, F
 from .models import Entry, Comment
 
@@ -17,9 +17,6 @@ class Home(ListView):
     model = Entry
     template_name = "entries/home.html"
     context_object_name = "context"
-    print("test")
-
-
     
     def get_queryset(self):
 
@@ -63,3 +60,17 @@ class UpdateEntryView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         if self.request.user.id == post.owner.id:
             return True
         return False
+
+
+class EntryDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView): 
+    model = Entry
+    success_url = "/"
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user.id == post.owner.id:
+            return True
+        return False
+
+    # def get_object(self, queryset=None):
+    #     pk = self.request.POST("pk")
+    #     return self.get_queryset().filter(pk=pk).get()

@@ -4,7 +4,7 @@
 {% for i in context%}
 <div class="post-{{ i.id}}">
     <li class="bg-blue-300">{{ i }} {{ i.owner }}</li>
-    <a href="{% url 'entry_detail' i.slug %}">{{ i.content|safe}}</a>
+    <a href="{% url 'entries:entry_detail' i.slug %}">{{ i.content|safe}}</a>
     {% if i.date_created < i.date_modified %}
     <p>Date Created: <sub>{{ i.date_created }}</sub>
         <sub>Date Modified:</sub>{{ i.date_modified }}</p>
