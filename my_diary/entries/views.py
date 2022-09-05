@@ -1,6 +1,10 @@
-from django.shortcuts import render, get_list_or_404, get_object_or_404, reverse
+from django.shortcuts import render, get_list_or_404, get_object_or_404, reverse, redirect
+from django.urls import reverse_lazy
 from django.db.models import Q, F
 from .models import Entry, Comment
+
+from django.contrib.auth.decorators import login_required
+
 
 from django.views.generic import (
     ListView,
@@ -9,7 +13,7 @@ from django.views.generic import (
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from .forms import EntryForm
+from .forms import EntryForm, CommentForm
 from users.models import Profile
 
 
@@ -38,7 +42,7 @@ class EntryDetailView(DetailView):
 class CreateEntryView(LoginRequiredMixin, CreateView):
     model = Entry
     form_class = EntryForm
-    success_url = "/"
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form):
         form.instance.owner = Profile.objects.get(user=self.request.user)
@@ -64,13 +68,41 @@ class UpdateEntryView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
 
 class EntryDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView): 
     model = Entry
-    success_url = "/"
+    success_url = reverse_lazy("home")
+
+
     def test_func(self):
         post = self.get_object()
         if self.request.user.id == post.owner.id:
             return True
         return False
 
-    # def get_object(self, queryset=None):
-    #     pk = self.request.POST("pk")
-    #     return self.get_queryset().filter(pk=pk).get()
+
+@login_required
+def postcomment(request, slug):
+    form = CommentForm()
+    # print(request.method, form, entry)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            entry = get_object_or_404(Entry, slug=slug)
+            form.instance.entry = entry
+            form.save()
+            print("test issaved", form)
+            print("HASDAsd")
+            return redirect("entries:home")
+    return render(request, "entries/comments/create_comment.html", {"form": form})
+
+
+
+# class PostACommentView(LoginRequiredMixin, CreateView):
+#     model = Comment
+#     success_url = reverse_lazy("home")
+#     template_name = "entries/comments/create_comment.html"
+
+#     form_class = CommentForm
+#     # print(self.request.data)
+
+#     def get(self, *args, **kwargs):
+#         entry = Entry.objects.get(slug=self.kwargs["slug"])
+#         return redirect(entry)

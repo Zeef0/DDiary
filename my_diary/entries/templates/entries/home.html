@@ -5,6 +5,8 @@
 <div class="post-{{ i.id}}">
     <li class="bg-blue-300">{{ i }} {{ i.owner }}</li>
     <a href="{% url 'entries:entry_detail' i.slug %}">{{ i.content|safe}}</a>
+
+    <a href="{% url 'entries:create_comment' i.slug %}" class="fw-500">Post a comment</a>
     {% if i.date_created < i.date_modified %}
     <p>Date Created: <sub>{{ i.date_created }}</sub>
         <sub>Date Modified:</sub>{{ i.date_modified }}</p>

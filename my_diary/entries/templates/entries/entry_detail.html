@@ -12,4 +12,6 @@
 
         <a href="{% url 'entries:delete_entry' content.id %}" class="btn btn-danher">Delete</a>
 
+        <a href="{% url 'entries:create_comment' content.slug %}">Test</a>
+
 {% endblock %}

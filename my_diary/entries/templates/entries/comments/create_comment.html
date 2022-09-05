@@ -1,0 +1,17 @@
+{% extends 'entries/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <legend>Create Comment</legend>
+  {{ form|crispy }}
+
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+</div>
+
+
+{% endblock %}
