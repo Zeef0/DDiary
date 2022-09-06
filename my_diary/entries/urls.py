@@ -11,5 +11,7 @@ urlpatterns = [
 
     # Comment related Crud
     path("entry/<slug:slug>/add/comment", views.postcomment, name="create_comment"),
+    path("delete/comment/<int:pk>", views.DeleteCommentView.as_view(), name="delete_comment")
+
 
 ]

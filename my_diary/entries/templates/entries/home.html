@@ -7,14 +7,14 @@
     <a href="{% url 'entries:entry_detail' i.slug %}">{{ i.content|safe}}
     </a>
     {{ i.view_count }}  <!-- view count   -->
-
+    {{ i.all_comments }} 
     <a href="{% url 'entries:create_comment' i.slug %}" class="fw-500">Post a comment</a>
     {% if i.date_created < i.date_modified %}
     <p>Date Created: <sub>{{ i.date_created }}</sub>
         <sub>Date Modified:</sub>{{ i.date_modified }}</p>
     {% else %}
     <small>crea{{ i.date_created }}</small>
->
+
 
     {% endif %}
     
