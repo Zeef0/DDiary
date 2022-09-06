@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from users.models import Profile
 
 from ckeditor.fields import RichTextField
@@ -14,12 +15,17 @@ class Entry(models.Model):
     privacy = models.CharField(max_length=13, help_text="Who can see this diary?", default="Public")
     title = models.CharField(max_length=80)
     content = RichTextField()
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     images = models.ImageField(blank=True, upload_to="users/images")
     slug = models.SlugField(blank=True)
+    view_count = models.IntegerField(default=0)
 
+
+    def increment_view_count(self):
+        self.view_count += 1
+        self.save()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -34,7 +40,7 @@ class Entry(models.Model):
         return self.title
 
 class Comment(models.Model):
-    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, related_name="entry_comments")
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, related_name="all_comments")
     text = models.CharField(max_length=120)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)

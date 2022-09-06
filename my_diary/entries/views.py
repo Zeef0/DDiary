@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404, reverse, redirect
 from django.urls import reverse_lazy
-from django.db.models import Q, F
+from django.db.models import Q, F, Count
 from .models import Entry, Comment
+
 
 from django.contrib.auth.decorators import login_required
 
@@ -17,6 +18,8 @@ from .forms import EntryForm, CommentForm
 from users.models import Profile
 
 
+from pprint import pprint
+
 class Home(ListView):
     model = Entry
     template_name = "entries/home.html"
@@ -27,7 +30,8 @@ class Home(ListView):
         """
         Show all items where entries are set to public 
         """
-        qs = Entry.objects.filter(Q(privacy="Public")| Q(owner__pk= self.request.user.pk))
+        qs = Entry.objects.filter(Q(privacy="Public")| Q(owner__pk= self.request.user.pk)).order_by("-view_count")
+        pprint(dir(qs), indent=2)
         
         return qs
 
@@ -35,17 +39,25 @@ class Home(ListView):
 class EntryDetailView(DetailView):
     model = Entry
     context_object_name = "content"
-    
+
+    def get_object(self, queryset=None):
+        """
+        Get the current instance of the model through slug then increment 
+        view count by one
+        """
+        item = super().get_object(queryset)
+        item.increment_view_count()
+        return item
 
 
 
 class CreateEntryView(LoginRequiredMixin, CreateView):
     model = Entry
     form_class = EntryForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("entries:home")
 
     def form_valid(self, form):
-        form.instance.owner = Profile.objects.get(user=self.request.user)
+        form.instance.owner = self.request.user
         return super().form_valid(form)
 
 
@@ -56,7 +68,7 @@ class UpdateEntryView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
 
 
     def form_valid(self, form):
-        form.instance.owner = self.request.owner
+        form.instance.owner = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
@@ -68,12 +80,12 @@ class UpdateEntryView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
 
 class EntryDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView): 
     model = Entry
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("entries:home")
 
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user.id == post.owner.id:
+        if self.request.user == post.owner: # test this chek if wrong 
             return True
         return False
 
@@ -81,7 +93,6 @@ class EntryDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
 @login_required
 def postcomment(request, slug):
     form = CommentForm()
-    # print(request.method, form, entry)
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -93,7 +104,16 @@ def postcomment(request, slug):
             return redirect("entries:home")
     return render(request, "entries/comments/create_comment.html", {"form": form})
 
+class DeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
+    model = Comment
+    success_url = reverse_lazy("entries:home")
 
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user == obj.entry.owner:
+            return True
+        print("False")
+        return False
 
 # class PostACommentView(LoginRequiredMixin, CreateView):
 #     model = Comment
