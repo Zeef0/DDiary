@@ -100,7 +100,7 @@ def postcomment(request, slug):
             form.instance.entry = entry
             form.save()
             return redirect("entries:home")
-    return render(request, "entries/comments/create_comment.html", {"form": form})
+    return render(request, "entries/create_comment.html", {"form": form})
 
 class DeleteCommentView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = Comment
@@ -111,15 +111,3 @@ class DeleteCommentView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
         if self.request.user == obj.entry.owner:
             return True
         return False
-
-# class PostACommentView(LoginRequiredMixin, CreateView):
-#     model = Comment
-#     success_url = reverse_lazy("home")
-#     template_name = "entries/comments/create_comment.html"
-
-#     form_class = CommentForm
-#     # print(self.request.data)
-
-#     def get(self, *args, **kwargs):
-#         entry = Entry.objects.get(slug=self.kwargs["slug"])
-#         return redirect(entry)
