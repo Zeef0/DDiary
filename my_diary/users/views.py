@@ -9,10 +9,13 @@ from django.views.generic import (
     DetailView
     )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .forms import UserCreationForm 
+
 
 class CreateUserView(CreateView):
     model = User
-    fields = ["username", "email", "password"]
+    form_class  = UserCreationForm
+
     template_name = "users/create_profile.html"
     success_url = reverse_lazy("entries:home")
 

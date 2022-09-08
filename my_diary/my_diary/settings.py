@@ -152,3 +152,12 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "entries:home"
 LOGOUT_URL = "logout"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email
+
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT= config("EMAIL_PORT")
+EMAIL_BACKEND = config("EMAIL_BACKEND")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER= config("EMAIL_HOST_USER")
+SMTP_ENABLED = True

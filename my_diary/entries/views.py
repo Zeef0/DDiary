@@ -31,7 +31,6 @@ class Home(ListView):
         Show all items where entries are set to public 
         """
         qs = Entry.objects.filter(Q(privacy="Public")| Q(owner__pk= self.request.user.pk)).order_by("-view_count")
-        pprint(dir(qs), indent=2)
         
         return qs
 
