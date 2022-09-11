@@ -17,8 +17,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import EntryForm, CommentForm
 from users.models import Profile
 
-
+from django.core.mail import send_mail 
 from pprint import pprint
+from decouple import config
 
 class Home(ListView):
     model = Entry
@@ -33,6 +34,9 @@ class Home(ListView):
         qs = Entry.objects.filter(Q(privacy="Public")| Q(owner__pk= self.request.user.pk)).order_by("-view_count")
         
         return qs
+
+
+
 
 
 class EntryDetailView(DetailView):

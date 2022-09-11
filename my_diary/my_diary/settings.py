@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'tailwind',
+    'django_email',
     'theme'
 
 ]
@@ -131,7 +132,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_DIRS = [
-    os.path.join(BASE_DIR, "static/")
 ]
 
 
@@ -153,11 +153,13 @@ LOGIN_REDIRECT_URL = "entries:home"
 LOGOUT_URL = "logout"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email
+
 
 EMAIL_HOST = config("EMAIL_HOST")
 EMAIL_PORT= config("EMAIL_PORT")
 EMAIL_BACKEND = config("EMAIL_BACKEND")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_HOST_USER= config("EMAIL_HOST_USER")
+EMAIL_USE_TLS=True
 SMTP_ENABLED = True
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")

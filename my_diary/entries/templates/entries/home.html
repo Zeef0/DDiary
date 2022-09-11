@@ -3,7 +3,7 @@
 {% block content %}
 {% for i in context%}
 <div class="post-{{ i.id}}">
-    <li class="bg-blue-300">{{ i }} {{ i.owner }}</li>
+    <li class="bg-blue-300"> {{ i.owner }}</li>
     <a href="{% url 'entries:entry_detail' i.slug %}">{{ i.content|safe}}
     </a>
     {{ i.view_count }}  <!-- view count   -->
@@ -18,7 +18,7 @@
 
     {% endif %}
     
-    <h4 style="color: #da52f6">XOXOXO<small>{{ i.comment }}</small></h4>
+    <h4 style="color: #da52f6">XOXOXO<small>{{ i.comment_set.all }}</small></h4>
 
 <img src="{{ context.owner.profile_pic.url  }}" alt="{{i.owner}}'s profile pic" srcset="">
 </div>

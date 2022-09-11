@@ -14,6 +14,7 @@ class CommentAdminModel(admin.ModelAdmin):
     list_display = ["entry", "text", "date_modified", "date_created"]
 
 
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ["user", "profile_pic", "gender"]
+# @admin.register(Profile)
+# class ProfileAdmin(admin.ModelAdmin):
+#     list_display = ["user", "profile_pic", "gender"]
+admin.site.register(Profile)
