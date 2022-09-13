@@ -45,10 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'crispy_forms',
     'ckeditor',
-    'tailwind',
-    'django_email',
-    'theme'
-
+    'taggit',
 ]
 
 MIDDLEWARE = [

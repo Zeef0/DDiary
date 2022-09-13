@@ -2,11 +2,37 @@
 
 {% block content %}
 {% for i in context%}
-<div class="post-{{ i.id}}">
+
+{% for tag in i.tags.all %}
+    {{ forloop.count}} tag =>  <a href="{% url  'entries:filtered_post' tag.slug %}">{{ tag }}
+        {% endfor %}</a>
+<div class="container mt-1">
+    <div class="row">
+        <div class="col-sm bg-warning"></div>
+        <div class="col-sm bg-danger">x</div>
+        <div class="col-sm bg-primary">x</div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endfor %}
+{% endblock %}
+
+
+
+<!-- <div class="post-{{ i.id}}">
     <li class="bg-blue-300"> {{ i.owner }}</li>
     <a href="{% url 'entries:entry_detail' i.slug %}">{{ i.content|safe}}
     </a>
-    {{ i.view_count }}  <!-- view count   -->
+    {{ i.view_count }}  view count  
     {{ i.all_comments }} 
     <a href="{% url 'entries:create_comment' i.slug %}" class="fw-500">Post a comment</a>
     {% if i.date_created < i.date_modified %}
@@ -22,5 +48,4 @@
 
 <img src="{{ context.owner.profile_pic.url  }}" alt="{{i.owner}}'s profile pic" srcset="">
 </div>
-{% endfor %}
-{% endblock %}
+-->

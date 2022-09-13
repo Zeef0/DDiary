@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from users.models import Profile
 
 from ckeditor.fields import RichTextField
+from taggit.managers import TaggableManager
 from django.dispatch import receiver
 
 from django.utils.text import slugify 
@@ -12,15 +13,16 @@ class Entry(models.Model):
         ("TO Anyone", "Public"),
         ("None", "Private")
     )
-    privacy = models.CharField(max_length=13, help_text="Who can see this diary?", default="Public")
     title = models.CharField(max_length=80)
+    privacy = models.CharField(max_length=13, help_text="Who can see this diary?", default="Public")
     content = RichTextField()
+    images = models.ImageField(blank=True, upload_to="users/images")
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    images = models.ImageField(blank=True, upload_to="users/images")
     slug = models.SlugField(blank=True)
     view_count = models.IntegerField(default=0)
+    tags = TaggableManager()
 
 
     def increment_view_count(self):

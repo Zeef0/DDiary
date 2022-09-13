@@ -20,6 +20,7 @@ from users.models import Profile
 from django.core.mail import send_mail 
 from pprint import pprint
 from decouple import config
+from taggit.models import Tag
 
 class Home(ListView):
     model = Entry
@@ -37,7 +38,16 @@ class Home(ListView):
 
 
 
+class FilteredPostTag(ListView):
+    model = Entry
+    template_name = "entries/filter_by_tag.html"
+    context_object_name = "context"
 
+    def get_queryset(self, *args, **kwargs):
+        object_list = Entry.objects.all()
+        tag_obj = get_object_or_404(Tag, slug=self.kwargs["slug"])
+        qs = object_list.filter(tags__in=[tag_obj])
+        return qs
 
 class EntryDetailView(DetailView):
     model = Entry

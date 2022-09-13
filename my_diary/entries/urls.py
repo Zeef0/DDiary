@@ -6,6 +6,7 @@ urlpatterns = [
     path("", views.Home.as_view(), name="home"),
     path("entry/<slug:slug>", views.EntryDetailView.as_view(), name="entry_detail"),
     path("new/entry", views.CreateEntryView.as_view(), name="create_entry"),
+    path("entry/filter_by/<slug:slug>", views.FilteredPostTag.as_view(), name="filtered_post"),
     path("update/entry/<slug:slug>", views.UpdateEntryView.as_view(), name="update_entry"),
     path("delete/entry/<int:pk>", views.EntryDeleteView.as_view(), name="delete_entry"),
 

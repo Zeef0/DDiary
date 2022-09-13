@@ -15,13 +15,13 @@
 <body>
     <nav class="navbar">
         <a href="{% url 'entries:home'%}" class="nav-brand"><img src="{% static 'entries/Media/D-Diary.svg'%}" class="brand-logo" alt="Error" srcset=""></a>
-        <ul class="nav-list">
+        <ul class="nav-list list list-unstyled">
             {% if request.user.is_authenticated %}
-            <li><a href="">{{ request.user }}</a></li>
-            <li><a href="{% url 'entries:create_entry'%}">New Entry</a></li>
-            <li><a href="{% url 'logout'%}">Logout</a></li>
+            <li class="list-group-item"><a class="text-decoration-none" href="{% url 'users:users_profile' request.user.username%}">{{ request.user }}</a></li>
+            <li class="list-group-item"><a class="text-decoration-none" href="{% url 'entries:create_entry'%}">New Entry</a></li>
+            <li class="list-group-item"><a class="text-decoration-none" href="{% url 'logout'%}">Logout</a></li>
             {% else %}
-            <li><a href="{% url 'login'%}">Login</a></li>
+            <li class="list-group-item"><a class="text-decoration-none" href="{% url 'login'%}">Login</a></li>
             {% endif %}
         </ul>
     </nav>

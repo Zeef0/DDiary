@@ -2,12 +2,14 @@
     display: flex;
     background-color: rgba(59, 57, 57, 0.178);
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline; 
     min-height: 10vh;
     margin-bottom: 2rem;
     border-bottom: 1px solid black;
 }
-
+nav.navbar{
+    align-items: baseline;
+}
 .navbar .nav-brand {
     padding-left: 1.5em;
 }
