@@ -1,11 +1,13 @@
-from .models import Profile
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from .models import Profile, UserFollowing
 from entries.models import Entry, Comment
 from django.urls import reverse_lazy
 
 
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic import (ListView, DetailView )
+from django.views.generic import ListView, DetailView
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -25,18 +27,19 @@ class CreateUserView(CreateView):
     form_class  = UserRegistrationForm
 
     template_name = "users/create_profile.html"
-    success_url = reverse_lazy("entries:home")
+    success_url = reverse_lazy("login")
 
     def form_valid(self, form):
         username = form.cleaned_data.get("username")
         email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
         html_message = render_to_string("entries/user_creation.html")
         message = strip_tags(html_message)
         send_mail(
             f"Account Created for {username}",
             message,
             config("EMAIL_HOST_USER"),
-        ( email, ),
+            (email, ),
         html_message
         )
         return super().form_valid(form)
@@ -80,3 +83,10 @@ class UpdateUserView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         if item.username== self.request.user.username:
             return True
         return False
+
+
+def follow_user(request, username):
+    user_following = get_object_or_404(User, username=username)
+    print(isinstance(user_following, (User, )))
+    UserFollowing.objects.create(user_id=request.user, following_user_id=user_following)
+    return redirect("entries:home")

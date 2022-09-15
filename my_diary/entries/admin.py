@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import  Entry, Comment
 from users.models import Profile, UserFollowing
 
-# @admin.site.register(UserFollowing)
 
 @admin.register(Entry)
 class EntryAdminModel(admin.ModelAdmin):
