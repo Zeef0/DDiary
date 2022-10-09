@@ -54,6 +54,7 @@ class UpdateProfileView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ["profile_pic", "gender", "bio"]
     slug_field = "user__username"
+    success_url = reverse_lazy("entries:home")
 
     def form_valid(self, form):
         form.instance.user = self.request.user

@@ -1,19 +1,23 @@
 {% extends 'entries/base.html' %}
 
 {% block content %}
-        <div class="container">
-                <a href="{% url 'entries:update_entry' content.slug %}">
-                <h3>{{ content.title }}</h3>
-                <h4>{{ content.owner }}</h4>
+        <div class="container border w-50                text-black">
+                <img src="{{ content.owner.profile_pic.url }}" alt="">
+                <h3 class="px-3 py-2">{{ content.title|safe }}</h3>
+                <h4 class="px-2 py-3">{{ content.owner }}</h4>
                 <small>{{ content.date_created }}</small>
                 <p class="lead">{{ content.content }}</p>
-        </a>
-        </div>
 
-        <h1 class="text-warning">{{ content.view_count }}</h1>
+        
+        
+        
+                {% if request.user == content.owner %}
+                <a href="{% url 'entries:update_entry' content.slug %}" class="btn btn-success text-white text-decoration-none p-2">Update Post </a>
+                <h1 class="text-warning">Views: {{ content.view_count }}</h1>
 
-        <a href="{% url 'entries:delete_entry' content.id %}" class="btn btn-danher">Delete</a>
-
-        <a href="{% url 'entries:create_comment' content.slug %}">Test</a>
+        <a href="{% url 'entries:delete_entry' content.id %}" class="btn btn-danger m-4">Delete</a>
+        {% endif %}
+        <a href="{% url 'entries:create_comment' content.slug %}" class="btn btn-primary m-2">Add Comment</a>
+</div>
 
 {% endblock %}

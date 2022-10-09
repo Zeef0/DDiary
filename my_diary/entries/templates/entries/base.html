@@ -12,19 +12,25 @@
     {%endblock%}
 
 </head>
-<body>
-    <nav class="navbar">
+<body style="max-width: 100vw;">
+
+    <nav class="navbar bg-dark text-white">
         <a href="{% url 'entries:home'%}" class="nav-brand"><img src="{% static 'entries/Media/D-Diary.svg'%}" class="brand-logo" alt="Error" srcset=""></a>
         <ul class="nav-list list list-unstyled">
             {% if request.user.is_authenticated %}
-            <li class="list-group-item"><a class="text-decoration-none" href="{% url 'users:users_profile' request.user.username%}">{{ request.user }}</a></li>
+
+            <li class="list-group-item"><a class="text-decoration-none" href="{% url 'users:users_profile' request.user.username%}"><img src="{{ request.user.profile.profile_pic.url }}" alt="sus"  class="rounded-circle" style="width: 100px;" height="100%"> {{ request.user }}</a></li>
             <li class="list-group-item"><a class="text-decoration-none" href="{% url 'entries:create_entry'%}">New Entry</a></li>
             <li class="list-group-item"><a class="text-decoration-none" href="{% url 'logout'%}">Logout</a></li>
             {% else %}
             <li class="list-group-item"><a class="text-decoration-none" href="{% url 'users:create_user'%}">Register</a></li>
             <li class="list-group-item"><a class="text-decoration-none" href="{% url 'login'%}">Login</a></li>
             {% endif %}
+
         </ul>
+        
+        
+
     </nav>
     {% block content %}
     {% endblock %}

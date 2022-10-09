@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&family=Roboto:wght@100;300;400&display=swap');
 
-
 body { 
     font-family: 'Montserrat',  'Roboto', sans-serif;
     line-height: 1.7;
@@ -43,4 +42,5 @@ nav.navbar{
 .navbar ul li a {
     color: #da52f6;
     font-weight: 600;
+    font-family:  'Roboto', 'sans-serif';
 }

@@ -2,6 +2,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404, reverse
 from django.urls import reverse_lazy
 from django.db.models import Q, F, Count
 from .models import Entry, Comment
+from django.contrib.auth.models import User 
 
 
 from django.contrib.auth.decorators import login_required
@@ -26,15 +27,22 @@ class Home(ListView):
     model = Entry
     template_name = "entries/home.html"
     context_object_name = "context"
+
+
     
     def get_queryset(self):
 
         """
-        Show all items where entries are set to public 
+        Get query if user search something
         """
-        qs = Entry.objects.filter(Q(privacy="Public")| Q(owner__pk= self.request.user.pk)).order_by("-view_count")
+        search = self.kwargs.get("search")
+        qs = ""
+        if search:
+            qs = Entry.objects.filter(Q(owner__icontains=search)| Q(tags=search)|Q(content__icontains=search))
+        qs = Entry.objects.filter(Q(privacy="Public")| Q(owner__id= self.request.user.pk)).order_by("-view_count")
         
         return qs
+ 
 
 
 
@@ -44,6 +52,9 @@ class FilteredPostTag(ListView):
     context_object_name = "context"
 
     def get_queryset(self, *args, **kwargs):
+        """
+            Get the related entries through slug
+        """
         object_list = Entry.objects.all()
         tag_obj = get_object_or_404(Tag, slug=self.kwargs["slug"])
         qs = object_list.filter(tags__in=[tag_obj])
@@ -67,8 +78,7 @@ class EntryDetailView(DetailView):
 class CreateEntryView(LoginRequiredMixin, CreateView):
     model = Entry
     form_class = EntryForm
-    success_url = reverse_lazy("entries:home")
-
+    
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
@@ -113,7 +123,7 @@ def postcomment(request, slug):
             form.instance.entry = entry
             form.save()
             return redirect("entries:home")
-    return render(request, "entries/create_comment.html", {"form": form})
+    return render(request, "entries/create_comment.html", {"form": form, "post": Entry.objects.get(slug=slug)})
 
 class DeleteCommentView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = Comment
