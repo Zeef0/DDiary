@@ -28,11 +28,13 @@ class Entry(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     slug = models.SlugField(blank=True)
     view_count = models.IntegerField(default=0)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     class Meta:
+        verbose_name = "Entry"
         verbose_name_plural = "entries"
         ordering = ["-date_created"]
+        # db_table = "user_entries"
 
     def increment_view_count(self):
         self.view_count += 1
@@ -51,13 +53,16 @@ class Entry(models.Model):
         return self.title
 
 class Comment(models.Model):
-    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, related_name="all_comments")
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, related_name="comments")
     text = models.CharField(max_length=120, help_text="Add a comment")
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-date_modified"]
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
+        db_table = "entry_comment"
 
     def __str__(self):
         return self.text

@@ -2,12 +2,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-{{ request.user }}
-<form action="" method="post">
+<form action="" method="post" class="container w-75 px-3 py-2">
     {% csrf_token %}
-    <legend>Update User</legend>
-    {{ form|crispy}}
-    <button type="submit" class="btn btn-success my2">Submit</button>
+    <fieldset class="form-control px2">
+
+        <legend>Update User</legend>
+        {{ form|crispy}}
+        <button type="submit" class="btn btn-success my-2">Submit</button>
+    </fieldset>
 </form>
 {% endblock %}
 

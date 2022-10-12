@@ -5,7 +5,11 @@ from django import forms
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        exclude = ["owner","date_created", "date_modified", "slug", "view_count"]
+        fields = ["title", "tags", "privacy", "content", "images"]
+
+        widgets = {
+            "images": forms.ClearableFileInput(attrs={"class": "btn-success", "class": "btn"})
+        }
 
 
 class CommentForm(forms.ModelForm):

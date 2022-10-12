@@ -2,14 +2,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-    <fieldset>
+<form action="" method="post" class="container w-75">{% csrf_token %}
+    <fieldset class="form-control mb-2 pb-2">
     {{ form|crispy }}
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="submit">
-  Button
+    <button class="btn btn-success m-2" type="submit">Login
 </button>
     </fieldset>
-
-    tese
 </form>
 {% endblock %}

@@ -16,6 +16,9 @@ class Profile(models.Model):
 
     class Meta:
         get_latest_by = "user"
+        db_table = "users_profile"
+        verbose_name = "Profile"
+        verbose_name_plural = "Profiles"
 
     def __str__(self):
         return self.user.username

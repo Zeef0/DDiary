@@ -2,24 +2,25 @@
 
 {% block content %}
 
-{% for i in context %}
-    <div class="container w-50-lg w-25-sm  h-75-lg border border-secondary p-lg-4  my-lg-4 my-sm-3">
+
+<div class="container w-50-md w-75-sm border-1 border-2">
+
+    {% for i in context %}
+    
+    <div class="container-fluid border border-secondary p-lg-4 p-sm-2 my-3">
         <h2 class="text-dark m-3">
             <img src="{{ i.owner.profile.profile_pic.url}}" class="article-img rounded-circle" width="150px" alt="test">
             {{ i.owner }}
         </h2>
         <small class="text-primary pl-1 m-3">{{ i.date_created}}</small>
         <h3 class="text-dark">{{ i.title }}</h3>
-        <button class="bg-primary">{{ i.tags }}</button>
-        
-        <p class="container-fluid py-lg-3 py-sm-1">{{ i.content|safe }}
-            {% if i.images %}
-            <img src="{{ i.images.url }}" alt="">
+        {% for tag in i.tags.all %}
+        <a href="{% url 'entries:filtered_post' i.tag%">{{ tag }} </a>
+        {% endfor %}
+        <p class="container-fluid py-lg-3 py-sm-1">{{ i.content|safe }}</p>
+        {% if i.images %}
+            <img src="{{ i.images.url }}" alt="smething">
             {% endif %}
-        </p>
     </div>
-{% endfor %}
-
-
-
+</div>
 {% endblock %}
