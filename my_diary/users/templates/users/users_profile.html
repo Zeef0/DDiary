@@ -2,6 +2,30 @@
 {% load crispy_forms_tags%}
 
 {% block content %}
+
+
+<div class="row w-75 mx-auto">
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-body text-center">
+        <img src="{{ profile.profile_pic.url }}" style="object-fit: cover; width: 150px" alt="" class="article-img rounded-circle">
+         
+          <h5 class="my-3">{{ profile.user.username }}</h5>
+          <p class="text-muted mb-1"> {{ profile.bio }}</p>
+          <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+          <div class="d-flex justify-content-center mb-2">
+            <button type="button" class="btn btn-primary">Follow</button>
+            <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!--
+
+
 <h1>{{ profile.all_post}}</h1>
 <div class="container border border-1 w-auto media img-fluid ">
 
@@ -46,7 +70,7 @@
     </div>
     {% endfor %}
 </div>
-
+-->
 
 
 {% endblock %}
