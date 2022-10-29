@@ -1,0 +1,15 @@
+{% extends 'entries/base.html '%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form action="" method="post" class="container w-75 px-3 py-2">
+    {% csrf_token %}
+    <fieldset class="form-control px2">
+
+        <legend>Update User</legend>
+        {{ form|crispy}}
+        <button type="submit" class="btn btn-success my-2">Submit</button>
+    </fieldset>
+</form>
+{% endblock %}
+

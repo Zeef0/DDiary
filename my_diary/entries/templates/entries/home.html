@@ -1,0 +1,37 @@
+{% extends 'entries/base.html '%}
+{% block css %}
+<title>D-Diary</title>
+{% endblock %}
+{% block content %}
+
+
+<div class="container w-50-md w-50-sm border-1 border-2">
+
+    {% for i in context %}
+    <div class="container-fluid border border-secondary p-lg-4 p-sm-3 my-3" style="font-family: 'Montserrat',  'Roboto', sans-serif">
+        <a class="fw-bolder m-3 h2 text-decoration-none pl-1 h1 link-dark text-decoration-none" style="font-family: 'Roboto', sans-serif ; color: #16123f;">
+            <img src="{{ i.owner.profile.profile_pic.url}}" class="article-img rounded-circle" width="150px" alt="test">
+        </a>
+        <h2>{{ i.owner }}</h2>
+        <a href="{% url 'entries:entry_detail' i.slug%}" class="link-dark text-decoration-none">
+        <div class="pl-1">
+            <small class="text-primary p1-lg-1 m-3">{{ i.date_created}}</small><br>
+
+        {% for tag in i.tags.all %}
+            <small class="btn btn-primary my-1">{{ tag }} </small>
+        {% endfor %}
+
+    </div class="pl-1">
+    <p class="container-fluid py-lg-3 py-sm-1 h2" >{{ i.content|safe }}</p>
+
+    {{ comments }}
+</a>
+    {% if i.images %}
+    <img src="{{ i.images.url }}" alt="something">
+    {% endif %}
+    </div>
+    <h1>{{ i.comment.all }}</h1>
+    {% endfor %}
+</div>
+
+{% endblock %}

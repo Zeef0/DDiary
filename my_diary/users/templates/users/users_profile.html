@@ -1,0 +1,52 @@
+{% extends 'entries/base.html' %}
+{% load crispy_forms_tags%}
+
+{% block content %}
+<h1>{{ profile.all_post}}</h1>
+<div class="container border border-1 w-auto media img-fluid ">
+
+    <div style="width: 30%" class="container-fluid">
+        <img src="{{ profile.profile_pic.url }}" style="object-fit: cover; width: 100%" alt="" class="article-img rounded-circle">
+    </div>
+    <h2>{{ profile.user.username }}</h2>   
+
+    <div class="bio">
+        {% if request.user == profile.user %}
+        <ul class="list-group-horizontal">
+
+            <li class="list-group-item"><a href="{% url 'users:update_user' profile.user.username %}" class="btn btn-success list-group-item"> Update User </a></li>
+            <li class="list-group-item"><a href="{% url 'users:update_profile' profile.user.username %}" class="btn btn-success list-group-item">Update Bio</a></li>
+        </ul>
+        {% endif %}
+        <p>{{ profile.bio }}</p>
+        {%if request.user !=  profile.user and profile.user and profile.user not in followers.following_user_id %}
+        <li><a href="{% url 'users:follow_user' profile.user.username %}" class="btn btn-success">Follow</a></li>
+        {% endif %}
+
+    </div> 
+
+
+    <h2 class="h1 text-primary">Following: {{ count }}
+        <ul>
+            {% for item in followers %}
+            <li>    
+                <h1>{{ item.following_user_id  }}</h1>
+            </li>
+            {% endfor %}
+        </ul>
+    </h2>
+
+</div>
+<div class="post-container container w-md-75 w-50-sm border border-1 mt-2">
+    {% for post in all_post %}
+    <div class="container-fluid p-3">
+       <img src="{{ profile.profile_pic.url }}" alt="" srcset="" class="rounded-circle"> <h1 class="bg-primary w-25 text-white" style="font-family: 'Roboto', sans-serif"></h1>{{ post.owner }}</h1>
+        <img src="" alt="" style="object-fit: cover;" class="rounded-circle">
+        <p class="lead article">{{ post.content|safe}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}

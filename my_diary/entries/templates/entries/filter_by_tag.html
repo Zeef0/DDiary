@@ -1,0 +1,14 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+
+
+{% for post in context %}
+    <div class="container w-50">
+        <div class="container-fluid border-secondary border-right border-bottom">
+            {{ post }}
+        </div>
+        
+        {% endfor %}
+    </div>
+{% endblock %}

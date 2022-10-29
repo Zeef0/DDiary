@@ -1,0 +1,36 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+        <div class="container border w-50 text-black">
+                <div class="container-fluid text-dark ">
+
+                        <img src="{{ content.owner.profile_pic.url }}" class="rounded-img " alt="">
+                        <h1 class="text-dark">{{ content.title|safe }}</h1>
+                        <h4>{{ content.owner }}</h4>
+                        <small>{{ content.date_created }}</small>
+                        <p class="lead">{{ content.content }}</p>
+                </div>
+
+        
+        
+        
+                {% if request.user == content.owner %}
+                <div class="container">
+
+                        <h4 class="text-warning">Views: {{ content.view_count }}</h4>
+                        <a href="{% url 'entries:update_entry' content.slug %}" class="btn btn-success text-white text-decoration-none p-2">Update Post </a>
+                        
+                        <a href="{% url 'entries:delete_entry' content.id %}" class="btn btn-danger m-4">Delete</a>
+                </div>
+        {% endif %}
+        <a href="{% url 'entries:create_comment' content.slug %}" class="btn btn-primary m-2">Add Comment</a>
+</div>
+
+{% for x in comment %}
+        <div class="container w-50">
+
+                <h1>{{ x.entry_id.user.username }}</h1>
+                {{ x }}
+        </div>
+{% endfor %}
+{% endblock %}
