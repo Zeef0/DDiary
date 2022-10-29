@@ -19,16 +19,18 @@ class Entry(models.Model):
         ("TO Anyone", "Public"),
         ("None", "Private")
     )
-    title = models.CharField(max_length=80)
-    privacy = models.CharField(max_length=13, help_text="Who can see this diary?", default="Public")
+
+
     content = RichTextField()
-    images = models.ImageField(blank=True, upload_to=upload_to_directory)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    images = models.ImageField(blank=True, upload_to=upload_to_directory)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    privacy = models.CharField(max_length=13, help_text="Who can see this diary?", default="Public")
     slug = models.SlugField(blank=True)
-    view_count = models.IntegerField(default=0)
     tags = TaggableManager(blank=True)
+    title = models.CharField(max_length=80, blank=True)
+    view_count = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Entry"

@@ -13,7 +13,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(default="default_profile.png", upload_to="profile_pic")
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES)
     bio = models.CharField(max_length=120, blank=True)
-
+    location = models.CharField(max_length=200, default="?")
     class Meta:
         get_latest_by = "user"
         db_table = "users_profile"

@@ -4,12 +4,14 @@
 {% block content %}
 
 
-<div class="row w-75 mx-auto">
-    <div class="col-lg-4">
-      <div class="card mb-4">
-        <div class="card-body text-center">
-        <img src="{{ profile.profile_pic.url }}" style="object-fit: cover; width: 150px" alt="" class="article-img rounded-circle">
-         
+<div class="container w-50">
+
+    <div class="row container-fluid">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="{{ profile.profile_pic.url }}" style="object-fit: cover; width: 150px" alt="" class="article-img rounded-circle">
+                    
           <h5 class="my-3">{{ profile.user.username }}</h5>
           <p class="text-muted mb-1"> {{ profile.bio }}</p>
           <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
@@ -20,6 +22,7 @@
         </div>
       </div>
     </div>
+</div>
 </div>
 
 
