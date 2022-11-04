@@ -61,7 +61,7 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
 class UpdateProfileView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Profile
-    fields = ["profile_pic", "gender", "bio"]
+    fields = ["profile_pic", "gender", "location", "bio"]
     slug_field = "user__username"
     success_url = reverse_lazy("entries:home")
 

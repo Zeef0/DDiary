@@ -14,10 +14,11 @@
                     
           <h5 class="my-3">{{ profile.user.username }}</h5>
           <p class="text-muted mb-1"> {{ profile.bio }}</p>
-          <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+          <p class="text-muted mb-4">{{ profile.location }}</p>
           <div class="d-flex justify-content-center mb-2">
-            <button type="button" class="btn btn-primary">Follow</button>
+            <button type="button" class="btn btn-outline-primary">Follow</button>
             <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+            <a href="{% url 'users:update_profile' profile.user.username%}" class="btn btn-black">Edit Profile</a>
           </div>
         </div>
       </div>
